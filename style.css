@@ -1,0 +1,111 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family:
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    sans-serif;
+  background: #f3f3f3;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+h1 {
+  margin: 0 0 12px;
+  font-size: 20px;
+  text-align: center;
+}
+
+h2 {
+  margin: 0 0 12px;
+  font-size: 16px;
+  text-align: center;
+  color: gray;
+}
+
+.cell {
+  width: 52px;
+  height: 52px;
+  border: 2px solid #444;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  background: #fafafa;
+  position: relative;
+  text-align: center;
+}
+
+.top-hide {
+  border-top: none;
+}
+
+.top-show {
+  border-top: 2px solid #444;
+  ;
+}
+
+.right-hide {
+  border-right: none;
+}
+
+.right-show {
+  border-right: 2px solid #444;
+}
+
+.bottom-hide {
+  border-bottom: none;
+}
+
+.bottom-show {
+  border-bottom: 2px solid #444;
+  ;
+}
+
+.left-hide {
+  border-left: none;
+}
+
+.left-show {
+  border-left: 2px solid #444;
+}
+
+.ghost {
+  visibility: hidden;
+}
+
+.final {
+  border-color: red;
+}
+
+.cell:last-child {}
+
+#box {
+  display: flex;
+}
+
+.win-message {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  font-size: 28px;
+  gap: 20px;
+}
+
+#replay-btn {
+  padding: 10px 20px;
+}
