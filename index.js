@@ -25,7 +25,7 @@ function getCellElement(input) {
     cell.type = "number";
   } else {
     cell.value = input;
-    cell.disabled=true
+    cell.disabled = true
   }
   return cell;
 }
@@ -34,15 +34,16 @@ const dirNames = ["top", "right", "bottom", "left"]
 function cellStatus(outer, inner) {
   const dirStatus = {}
   direction.forEach((dir, index) => {
-    dirStatus[dirNames[index]] = cellExist(outer + dir[0], inner + dir[1])}
+    dirStatus[dirNames[index]] = cellExist(outer + dir[0], inner + dir[1])
+  }
   )
   return dirStatus
 }
 
 function cellExist(outer, inner) {
-  if (outer >= 0 && outer < outerLength && inner >= 0 && inner < innerLength ) {
+  if (outer >= 0 && outer < outerLength && inner >= 0 && inner < innerLength) {
   }
-  const value =  outer >= 0 && outer < outerLength && inner >= 0 && inner < innerLength && colums[outer][inner] !== null && visited.includes(`${outer}-${inner}`) 
+  const value = outer >= 0 && outer < outerLength && inner >= 0 && inner < innerLength && colums[outer][inner] !== null && visited.includes(`${outer}-${inner}`)
   return value
 }
 
@@ -53,12 +54,23 @@ colums.forEach((col, indexOut) => {
     const status = cellStatus(indexOut, indexIn)
     const cell = getCellElement(item)
     Object.entries(status).forEach(([key, value]) => {
-        cell.classList.add(`${key}-${value ? 'hide': "show"}`)
+      cell.classList.add(`${key}-${value ? 'hide' : "show"}`)
     })
     cell.classList.add(`cell-${indexOut}-${indexIn}`)
     newColum.appendChild(cell)
-  visited.push(`${indexOut}-${indexIn}`)
-    cell.onchange = (e) => update(e.target.value, indexOut, indexIn)
+    visited.push(`${indexOut}-${indexIn}`)
+    // prevent typing — allow only arrows
+    cell.onchange = (e) => {
+      let num = Number(e.target.value);
+      console.log({ num })
+      // invalid input -> revert to previous value (or blank)
+      if (num < 1 || num > 9 || isNaN(num)) {
+        e.target.value = colums[indexOut][indexIn] ?? "";
+        return;
+      }
+
+      update(num, indexOut, indexIn);
+    };
   })
   box.appendChild(newColum)
 })
@@ -68,14 +80,18 @@ const finalCellElement = document.querySelector(data)
 finalCellElement.classList.add('final')
 
 function update(value, outer, inner) {
-  console.log("hello", outer, inner, value)
+  let num = Number(value);
+  if (num > 9 || num < 1) return;
   colums[outer][inner] = value
   const total = recalculateTotal()
-  console.log({total, colums})
+  console.log({ total, colums })
   if (total === null) return;
   finalCellElement.value = total
 
-    if (total === 66) {
+  if (total === 66) {
+    const hasEmpty = colums.some(row => row.includes("_"));
+    if (hasEmpty) return; // don't win yet
+
     const winBox = document.createElement("div");
     winBox.classList.add("win-message");
     winBox.innerHTML = `
